@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>data analysis - public</title>
+    <!--CSS Link-->
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/public-min.css"/>
+    <!--Js Link-->
+    <script src="plugins/jquery-1.11.3.min.js"></script>
+    <script src="plugins/bootstrap-3.3.4-dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="src/tableOperate.js" type="text/javascript"></script>
+    <script src="plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <script src="plugins/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="header">
+        <div class="header-nav">
+            <div class="header-logo"><span class="header-logo-fir">Data Analysis</span><span class="header-logo-sec">ShowJoy</span></div>
+            <div class="header-user">
+                <div class="header-user-ori">
+                    <img src="img/public-head-img.png"/>
+                    <span>user nameuser name</span>
+                </div>
+                <div class="header-user-hover j_header-user-hover">退出</div>
+            </div>
+            <!--<div class="header-search">search</div>-->
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div class="scroll-to-top j_scroll-to-top">TOP</div>
+        <div class="wrapper-content">
+            <div class="wrapper-nav j_wrapper-nav">
+                <ul>
+                    <li class="active"><a href="#">渠道效果监控</a></li>
+                    <li><a href="#">商品受访数据监控</a></li>
+                    <li><a href="#">受访页面分析</a></li>
+                    <li><a href="#">搜索记录监控</a></li>
+                    <li><a href="#">会员信息监控</a></li>
+                </ul>
+            </div>
+            <div class="wrapper-main">
+                <div class="wrapper-main-title">渠道效果监控</div>
+                <div class="wrapper-main-nav">
+                    <ul class="j_wrapper-main-nav-time">
+                        <li class="active" data-time="today">今天</li>
+                        <li data-time="yest">昨天</li>
+                        <li data-time="lastSeven">最近7天</li>
+                        <li data-time="lastThirty">最近30天</li>
+                    </ul>
+                    <div class="timePicker">
+                        <label for="timePicker">请选择时间：</label>
+                        <input id="timePicker" type="text" readonly class="j_timePicker"/>
+                    </div>
+                    <div class="port-picker j_port-picker">
+                        <input type="radio" value="ALL" name="portPicker" checked/>
+                        <label>全部</label>
+                        <input type="radio" value="PC" name="portPicker"/>
+                        <label>PC</label>
+                        <input type="radio" value="H5" name="portPicker"/>
+                        <label>H5</label>
+                    </div>
+                    <div class="export-button">
+                        <form method="post" action="">
+                            <button type="submit">导出到Excel</button>
+                        </form>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="wrapper-main-chart j_wrapper-main-chart"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            setTimePicker();
+            setScroll();
+            //下面四个方法分别对应不同的情景对应的数据请求
+            //dataAnalysisTable() --> 对应页面初始化的时候进行的请求，通常这个只在页面初始化的时候进行一次（确定了表格columns）；
+            dataAnalysisTable('http://10.1.2.39/dataAnalysis/JSON/channelMonitor.json');
+            //setMainNavTimeRequest() --> 对应今天、昨天、过去7天和过去30天的请求，数据从html的data中取；
+            setMainNavTimeRequest('http://10.1.2.39/dataAnalysis/JSON/channelMonitor.json');
+            //setTimePickerRequest() --> 对应日期选择器的请求，数据直接读取选择的日期；
+            setTimePickerRequest('http://10.1.2.39/dataAnalysis/JSON/channelMonitor2.json');
+            //setPortPickerRequest() --> 对应端口选择的请求，数据直接进行从radio按钮的value进行获取；
+            setPortPickerRequest('http://10.1.2.39/dataAnalysis/JSON/channelMonitor3.json');
+        });
+    </script>
+</body>
+</html>
